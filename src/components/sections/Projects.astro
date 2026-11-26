@@ -1,0 +1,29 @@
+---
+import Section from '../ui/Section.astro';
+import ProjectCard from '../ui/ProjectCard.astro';
+import { getProjects } from '../../lib/content';
+import { useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const projects = await getProjects(lang);
+---
+
+<Section id="projects" title={t('projects.title')} lede={t('projects.lede')} alt>
+  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {projects.map((project) => <ProjectCard project={project} lang={lang} />)}
+    <div
+      class="flex min-h-64 flex-col justify-center rounded-lg border border-dashed border-line p-6"
+    >
+      <h3 class="text-subhead font-bold">{t('projects.next')}</h3>
+      <p class="mt-1.5 text-muted">
+        {t('projects.nextBody')}
+        <a href="https://github.com/VasquezRW">github.com/VasquezRW</a>
+      </p>
+    </div>
+  </div>
+</Section>

@@ -1,0 +1,44 @@
+---
+import LangSwitcher from './LangSwitcher.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import { localizePath, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const home = localizePath('/', lang);
+const links = [
+  { id: 'experience', label: t('nav.experience') },
+  { id: 'skills', label: t('nav.skills') },
+  { id: 'projects', label: t('nav.projects') },
+  { id: 'contact', label: t('nav.contact') },
+] as const;
+---
+
+<header class="sticky top-0 z-40 border-b border-line bg-bg/90 gutter py-3 backdrop-blur-md">
+  <div class="mx-auto flex max-w-page flex-wrap items-center gap-x-5 gap-y-2">
+    <a href={home} class="mr-auto font-extrabold tracking-tight text-ink no-underline">
+      Wilmer Vasquez
+    </a>
+    <nav aria-label={t('nav.label')} class="hidden sm:block">
+      <ul class="flex flex-wrap gap-x-5 text-[0.9375rem]">
+        {
+          links.map((l) => (
+            <li>
+              <a href={`${home}#${l.id}`} class="text-muted no-underline hover:text-ink">
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <div class="flex items-center gap-2">
+      <LangSwitcher lang={lang} />
+      <ThemeToggle lang={lang} />
+    </div>
+  </div>
+</header>

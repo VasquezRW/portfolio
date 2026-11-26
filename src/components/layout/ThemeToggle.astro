@@ -1,0 +1,50 @@
+---
+import { useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<button
+  type="button"
+  id="theme-toggle"
+  data-to-dark={t('theme.toDark')}
+  data-to-light={t('theme.toLight')}
+  data-to-dark-label={t('theme.toDarkLabel')}
+  data-to-light-label={t('theme.toLightLabel')}
+  class="inline-flex min-h-10 cursor-pointer items-center rounded-full border border-line bg-surface px-3.5 text-sm font-semibold text-ink hover:border-muted"
+>
+  {t('theme.toDark')}
+</button>
+
+<script>
+  const button = document.getElementById('theme-toggle') as HTMLButtonElement | null;
+  const root = document.documentElement;
+
+  function sync() {
+    if (!button) return;
+    const dark = root.dataset.theme === 'dark';
+    button.textContent = dark ? button.dataset.toLight! : button.dataset.toDark!;
+    button.setAttribute(
+      'aria-label',
+      dark ? button.dataset.toLightLabel! : button.dataset.toDarkLabel!,
+    );
+  }
+
+  button?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch {
+      // Storage unavailable: the choice lasts for this page only.
+    }
+    sync();
+  });
+
+  sync();
+</script>

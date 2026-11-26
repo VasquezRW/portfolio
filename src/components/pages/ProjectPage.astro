@@ -1,0 +1,83 @@
+---
+import { Image } from 'astro:assets';
+import { render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TagList from '../ui/TagList.astro';
+import { localizePath, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  lang: Lang;
+}
+
+const { project, lang } = Astro.props;
+const t = useTranslations(lang);
+const p = project.data;
+const { Content } = await render(project);
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${p.title} · Wilmer Vasquez`}
+  description={p.summary}
+  image={p.cover.src}
+>
+  <article class="gutter band">
+    <div class="mx-auto max-w-page">
+      <a href={`${localizePath('/', lang)}#projects`} class="text-[0.9375rem] font-semibold">
+        ← {t('projects.back')}
+      </a>
+      <header class="mt-5 grid gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:items-end">
+        <div>
+          {
+            p.status !== 'completed' && (
+              <p class="mb-2 text-small font-semibold text-ochre">
+                {t(`projects.status.${p.status}`)}
+              </p>
+            )
+          }
+          <h1 class="text-display font-extrabold">{p.title}</h1>
+          <p class="mt-3 max-w-[60ch] text-lede text-muted">{p.summary}</p>
+        </div>
+        <div class="flex flex-col gap-4 lg:items-end">
+          <TagList tags={p.tags} class="lg:justify-end" />
+          <div class="flex flex-wrap gap-2.5">
+            {
+              p.repo && (
+                <a
+                  href={p.repo}
+                  class="inline-flex min-h-11 items-center rounded-md border border-pine bg-pine px-4.5 font-semibold text-bg no-underline"
+                >
+                  {t('projects.viewCode')}
+                </a>
+              )
+            }
+            {
+              p.demo && (
+                <a
+                  href={p.demo}
+                  class="inline-flex min-h-11 items-center rounded-md border border-pine px-4.5 font-semibold no-underline"
+                >
+                  {t('projects.demo')}
+                </a>
+              )
+            }
+          </div>
+        </div>
+      </header>
+
+      <Image
+        src={p.cover}
+        alt={p.coverAlt}
+        widths={[800, 1600]}
+        sizes="(min-width: 1140px) 1140px, 100vw"
+        class="mt-8 w-full rounded-lg border border-line"
+        loading="eager"
+      />
+
+      <div class="prose-content mt-4">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>

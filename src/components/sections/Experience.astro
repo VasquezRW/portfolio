@@ -1,0 +1,66 @@
+---
+import Section from '../ui/Section.astro';
+import TagList from '../ui/TagList.astro';
+import { getExperience } from '../../lib/content';
+import { formatYearMonth, monthsBetween } from '../../lib/dates';
+import { dateLocale, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const locale = dateLocale[lang];
+const jobs = await getExperience(lang);
+
+const today = new Date();
+const currentYm = `${today.getUTCFullYear()}-${String(today.getUTCMonth() + 1).padStart(2, '0')}`;
+
+function duration(start: string, end?: string): string {
+  const months = monthsBetween(start, end ?? currentYm);
+  if (months < 12) return t('experience.months', { n: months });
+  return t('experience.years', { y: Math.floor(months / 12), m: months % 12 });
+}
+---
+
+<Section id="experience" title={t('experience.title')} lede={t('experience.lede')} alt>
+  <ol>
+    {
+      jobs.map((job) => {
+        const d = job.data;
+        return (
+          <li class="grid gap-2 border-t border-line py-6 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-7">
+            <p class="text-sm text-muted tabular-nums">
+              <span class="font-semibold whitespace-nowrap text-ink">
+                {formatYearMonth(d.start, locale)} –{' '}
+                {d.end ? formatYearMonth(d.end, locale) : t('experience.present')}
+              </span>
+              <span class="block whitespace-nowrap max-sm:ml-2 max-sm:inline">
+                {duration(d.start, d.end)}
+              </span>
+            </p>
+            <article>
+              <h3 class="text-subhead font-bold">
+                {d.role} <span class="font-medium text-muted">· {d.company}</span>
+              </h3>
+              <p class="text-sm text-muted">{d.location}</p>
+              <p class="mt-2 max-w-[68ch]">{d.summary}</p>
+              {d.highlights.map((h) => (
+                <div class="mt-4 border-l-2 border-line pl-4">
+                  <h4 class="text-[0.9375rem] font-bold">{h.title}</h4>
+                  <ul class="mt-1.5 list-disc space-y-1 pl-5">
+                    {h.achievements.map((a) => (
+                      <li>{a}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+              <TagList tags={d.stack} label={t('experience.stack')} class="mt-4" />
+            </article>
+          </li>
+        );
+      })
+    }
+  </ol>
+</Section>

@@ -1,0 +1,227 @@
+---
+import { buildCareerGraph, type GraphJob } from '../../lib/career-graph';
+import type { YearMonth } from '../../lib/dates';
+
+interface Props {
+  jobs: GraphJob[];
+  personal: { name: string; date: YearMonth }[];
+  labels: { main: string; personal: string; summary: string };
+}
+
+const { jobs, personal, labels } = Astro.props;
+const today = new Date();
+const now = today.getUTCFullYear() + today.getUTCMonth() / 12;
+
+// One static SVG per breakpoint keeps text at real size without client JS.
+const sizes = [
+  { key: 'sm', width: 400, height: 340, cls: 'block md:hidden', sparse: true },
+  { key: 'md', width: 720, height: 340, cls: 'hidden md:block lg:hidden', sparse: false },
+  { key: 'lg', width: 1140, height: 340, cls: 'hidden lg:block', sparse: false },
+] as const;
+
+const COLORS = ['stroke-pine', 'stroke-steel', 'stroke-ochre'];
+const FILLS = ['fill-pine', 'fill-steel', 'fill-ochre'];
+const RIGHT = 28;
+
+/** Rough text width so labels near the right edge can be anchored to it instead. */
+const approxWidth = (text: string, px: number) => text.length * px * 0.56;
+
+const graphs = sizes.map((s) => ({
+  ...s,
+  graph: buildCareerGraph(jobs, {
+    width: s.width,
+    height: s.height,
+    now,
+    personal,
+    sparseTicks: s.sparse,
+    margin: { left: 20, right: RIGHT },
+  }),
+}));
+---
+
+<figure
+  role="img"
+  aria-label={labels.summary}
+  class="relative mt-7 overflow-hidden rounded-lg border border-line bg-surface"
+>
+  {
+    graphs.map(({ key, graph, cls, width }) => {
+      const big = key !== 'sm';
+      return (
+        <svg
+          viewBox={`0 0 ${graph.width} ${graph.height}`}
+          class:list={['h-auto w-full', cls]}
+          aria-hidden="true"
+          style="paint-order: stroke"
+        >
+          {graph.personal && (
+            <g>
+              <path
+                d={graph.personal.path}
+                class="fill-none stroke-muted"
+                stroke-width="2"
+                stroke-dasharray="5 6"
+              />
+              {graph.personal.commits.map((c) => (
+                <circle cx={c.x} cy={c.y} r="5" class="fill-surface stroke-muted" stroke-width="2">
+                  <title>{c.name}</title>
+                </circle>
+              ))}
+            </g>
+          )}
+
+          <line
+            x1={graph.main.from.x}
+            y1={graph.main.from.y}
+            x2={graph.main.to.x}
+            y2={graph.main.to.y}
+            class="stroke-ink"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <circle cx={graph.main.to.x} cy={graph.main.to.y} r="5" class="fill-ink" />
+
+          <line
+            x1={graph.main.from.x}
+            y1={graph.axis.y}
+            x2={graph.main.to.x}
+            y2={graph.axis.y}
+            class="stroke-line"
+          />
+          {graph.axis.ticks.map((tick) => (
+            <g>
+              <line
+                x1={tick.x}
+                y1={graph.axis.y}
+                x2={tick.x}
+                y2={graph.axis.y + 6}
+                class="stroke-muted"
+              />
+              <text
+                x={tick.x}
+                y={graph.axis.y + 26}
+                text-anchor="middle"
+                font-size="13"
+                class="fill-muted"
+              >
+                {tick.year}
+              </text>
+            </g>
+          ))}
+
+          {graph.branches.map((b) => (
+            <g>
+              <path
+                d={b.path}
+                class:list={['branch fill-none', COLORS[b.colorIndex % COLORS.length]]}
+                stroke-width="4"
+                stroke-linecap="round"
+              />
+              <circle
+                cx={b.start.x}
+                cy={b.start.y}
+                r="6"
+                class={FILLS[b.colorIndex % FILLS.length]}
+              />
+              {b.open ? (
+                <circle
+                  cx={b.end.x}
+                  cy={b.end.y}
+                  r="8"
+                  class:list={['fill-surface', COLORS[b.colorIndex % COLORS.length]]}
+                  stroke-width="4"
+                />
+              ) : (
+                <circle
+                  cx={b.end.x}
+                  cy={b.end.y}
+                  r="6"
+                  class={FILLS[b.colorIndex % FILLS.length]}
+                />
+              )}
+              {b.commits.map((c) => (
+                <circle
+                  cx={c.x}
+                  cy={c.y}
+                  r="5"
+                  class:list={['fill-surface', COLORS[b.colorIndex % COLORS.length]]}
+                  stroke-width="3"
+                >
+                  <title>{c.name}</title>
+                </circle>
+              ))}
+            </g>
+          ))}
+
+          {/* Labels last so their halo sits above every line. */}
+          <text
+            x={graph.main.from.x}
+            y={graph.main.from.y - 12}
+            font-size="13"
+            class="fill-muted stroke-surface"
+            stroke-width="4"
+          >
+            {labels.main}
+          </text>
+          {graph.personal && (
+            <text
+              x={graph.personal.label.x}
+              y={graph.personal.label.y - 12}
+              font-size="13"
+              font-weight="600"
+              class="fill-muted stroke-surface"
+              stroke-width="4"
+            >
+              {labels.personal}
+            </text>
+          )}
+          {graph.branches.map((b) => {
+            const size = big ? 16 : 14;
+            const w = Math.max(approxWidth(b.company, size), approxWidth(b.role, 13));
+            const overflow = b.label.x + w > width - RIGHT;
+            const x = overflow ? width - RIGHT : b.label.x;
+            const anchor = overflow ? 'end' : 'start';
+            return (
+              <g class="stroke-surface" stroke-width="4">
+                <text
+                  x={x}
+                  y={b.label.y - 30}
+                  font-size={size}
+                  font-weight="700"
+                  text-anchor={anchor}
+                  class="fill-ink"
+                >
+                  {b.company}
+                </text>
+                <text
+                  x={x}
+                  y={b.label.y - 12}
+                  font-size="13"
+                  text-anchor={anchor}
+                  class="fill-muted"
+                >
+                  {b.role}
+                </text>
+              </g>
+            );
+          })}
+        </svg>
+      );
+    })
+  }
+</figure>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .branch {
+      stroke-dasharray: 1600;
+      stroke-dashoffset: 1600;
+      animation: draw 1.2s ease-out forwards;
+    }
+    @keyframes draw {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+  }
+</style>

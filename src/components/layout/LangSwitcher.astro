@@ -1,0 +1,35 @@
+---
+import { languages, langs, localizePath, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<nav aria-label={t('lang.label')}>
+  <ul class="flex overflow-hidden rounded-full border border-line">
+    {
+      langs.map((l) => (
+        <li>
+          <a
+            href={localizePath(Astro.url.pathname, l)}
+            hreflang={l}
+            lang={l}
+            aria-current={l === lang ? 'true' : undefined}
+            data-lang-link={l}
+            class:list={[
+              'inline-flex min-h-10 items-center px-3.5 text-sm font-semibold no-underline',
+              l === lang ? 'bg-ink text-bg' : 'bg-surface text-ink hover:bg-line',
+            ]}
+          >
+            {l.toUpperCase()}
+            <span class="sr-only"> {languages[l]}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

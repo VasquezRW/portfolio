@@ -1,0 +1,21 @@
+company: Inbox Health
+role: QA Engineer
+start: '2025-10'
+end: '2026-06'
+location: Guatemala City, Guatemala
+summary: Owned manual and automated testing for a healthcare billing platform's web and mobile apps.
+stack: [Cypress, WebdriverIO, TypeScript, SQL, Postman, Stripe]
+highlights:
+  - title: Test strategy and automation
+    achievements:
+      - Managed manual and automated testing of the web and mobile apps, and wrote the roadmap for mobile automation.
+      - Automated web tests with Cypress and mobile tests with WebdriverIO and TypeScript.
+  - title: API and payment integrations
+    achievements:
+      - Ran functional, non-functional and API integration tests with external clients.
+      - Validated third-party services such as Stripe payments.
+      - Verified new features end to end, using SQL queries to confirm the data in the database was correct.
+  - title: QA process
+    achievements:
+      - Removed steps that slowed down the QA workflow and were blocking development.
+      - Improved how the team handled and tracked tickets on the project boards, giving everyone better visibility.

@@ -1,0 +1,48 @@
+# Usage (see docs/development.md):
+#   docker compose up dev                              # dev server on http://localhost:4321
+#   docker compose run --rm tools pnpm <script>        # lint, check, test, build, add deps…
+#   docker compose run --rm e2e                        # build + Playwright e2e/accessibility
+#   docker compose up --build site                     # production build on http://localhost:8080
+name: portfolio
+
+x-app: &app
+  working_dir: /app
+  volumes:
+    - .:/app
+    # Linux node_modules (and pnpm store) live in a volume, never on the host.
+    - node_modules:/app/node_modules
+  environment:
+    # File change events don't cross Docker Desktop's Windows/macOS bind mounts.
+    CHOKIDAR_USEPOLLING: 'true'
+
+services:
+  dev:
+    <<: *app
+    build: { context: ., target: dev }
+    image: portfolio-dev
+    ports: ['4321:4321']
+
+  tools:
+    <<: *app
+    image: portfolio-dev
+    build: { context: ., target: dev }
+    profiles: [tools]
+    command: pnpm install
+
+  e2e:
+    <<: *app
+    build: { context: ., target: e2e }
+    image: portfolio-e2e
+    profiles: [tools]
+    ipc: host
+    environment:
+      CI: 'true'
+
+  site:
+    build: { context: ., target: site }
+    image: portfolio-site
+    profiles: [site]
+    ports: ['8080:80']
+
+volumes:
+  node_modules:

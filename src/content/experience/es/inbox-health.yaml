@@ -1,0 +1,21 @@
+company: Inbox Health
+role: Ingeniero QA
+start: '2025-10'
+end: '2026-06'
+location: Ciudad de Guatemala, Guatemala
+summary: Responsable de las pruebas manuales y automatizadas de las apps web y móviles de una plataforma de facturación médica.
+stack: [Cypress, WebdriverIO, TypeScript, SQL, Postman, Stripe]
+highlights:
+  - title: Estrategia y automatización de pruebas
+    achievements:
+      - Gestioné las pruebas manuales y automatizadas de las apps web y móviles, y escribí la hoja de ruta de la automatización móvil.
+      - Automaticé pruebas web con Cypress y pruebas móviles con WebdriverIO y TypeScript.
+  - title: Integraciones de API y pagos
+    achievements:
+      - Ejecuté pruebas funcionales, no funcionales y de integración de API con clientes externos.
+      - Validé servicios de terceros como los pagos con Stripe.
+      - Verifiqué nuevas funcionalidades de extremo a extremo, con consultas SQL para confirmar que los datos en la base fueran correctos.
+  - title: Proceso de QA
+    achievements:
+      - Eliminé pasos que hacían lento el flujo de QA y bloqueaban el desarrollo.
+      - Mejoré el manejo y seguimiento de tickets en los tableros del proyecto, dando más visibilidad a todo el equipo.

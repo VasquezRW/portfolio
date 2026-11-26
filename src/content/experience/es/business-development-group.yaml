@@ -1,0 +1,21 @@
+company: Business Development Group
+role: QA Automation Engineer
+start: '2023-01'
+end: '2025-09'
+location: Ciudad de Guatemala, Guatemala
+summary: Construí y mantuve la automatización de pruebas de apps web, Android e iOS, incluida la app móvil de un banco.
+stack: [Java, Appium, Selenium, Serenity BDD, Cucumber, JUnit, Gradle, Android SDK]
+highlights:
+  - title: Automatización de la app móvil de un banco
+    achievements:
+      - Construí frameworks de automatización desde cero para apps web, Android e iOS con Java, Appium, Selenium, Serenity BDD y Cucumber.
+      - Ejecuté pruebas en dispositivos Android físicos y emuladores para mantenerlas estables entre versiones de Android.
+      - Introduje mejores estándares para identificar e interactuar con elementos de la interfaz en las apps móviles.
+  - title: CI/CD y entornos de prueba
+    achievements:
+      - Integré las pruebas automatizadas en pipelines de CI/CD y automaticé las suites de regresión críticas.
+      - Configuré y optimicé entornos de Appium en Windows, Linux y macOS.
+  - title: Equipo y documentación
+    achievements:
+      - Trabajé con desarrolladores y product owners para detectar y corregir defectos a tiempo.
+      - Investigué nuevas herramientas de pruebas y escribí la documentación técnica de nuestros frameworks.

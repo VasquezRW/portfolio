@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.astro/
+playwright-report/
+test-results/
+blob-report/
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+.vscode/*
+!.vscode/extensions.json
+.claude/settings.local.json

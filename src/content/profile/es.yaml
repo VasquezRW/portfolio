@@ -1,0 +1,86 @@
+name: Wilmer Vasquez
+title: QA Automation Engineer
+headline: Ingeniero de QA Automation para pruebas web, móviles y de API
+bio: >-
+  Llevo 3,5 años probando aplicaciones web, apps Android e iOS y APIs, de forma manual y
+  automatizada. Construyo frameworks de pruebas desde cero, los integro en CI/CD y ayudo a los
+  equipos a encontrar defectos antes de que lleguen a los usuarios.
+location: Ciudad de Guatemala, Guatemala
+availability: Disponible de inmediato, remoto o presencial
+facts:
+  - value: 3,5 años
+    label: QA manual y automatizado
+  - value: Web, Android, iOS, API
+    label: Plataformas que pruebo
+  - value: Inglés C1
+    label: Español nativo
+skills:
+  - category: Automatización de pruebas
+    items:
+      - name: Java
+      - name: TypeScript
+      - name: Appium
+      - name: Selenium
+      - name: Cypress
+      - name: WebdriverIO
+      - name: Serenity BDD
+      - name: Cucumber y Gherkin
+      - name: JUnit
+      - name: Playwright
+        selfTaught: true
+      - name: Pruebas asistidas por IA (Claude Code, Gemini)
+  - category: Práctica de pruebas
+    items:
+      - name: Pruebas funcionales y de regresión
+      - name: Pruebas de integración y end-to-end
+      - name: Pruebas de rendimiento (JMeter)
+      - name: Planes de prueba y matrices de cobertura
+      - name: Particiones de equivalencia, valores límite, tablas de decisión
+      - name: Análisis de logs (Mezmo, DevTools)
+  - category: API y datos
+    items:
+      - name: Postman
+      - name: Rest Assured
+      - name: Karate DSL
+      - name: Swagger
+      - name: SQL (MySQL, PostgreSQL, SQL Server)
+      - name: MongoDB (básico)
+      - name: GraphQL
+        selfTaught: true
+  - category: CI/CD y herramientas
+    items:
+      - name: Git, GitHub, GitLab
+      - name: GitHub Actions
+      - name: GitLab CI/CD
+      - name: Jenkins
+      - name: Jira, ClickUp, Confluence
+      - name: TestRail
+        selfTaught: true
+      - name: Scrum y Kanban
+      - name: Azure, AWS, GCP
+languages:
+  - name: Español
+    level: native
+    description: Lengua materna.
+  - name: Inglés
+    level: C1
+    description: Avanzado. Trabajo en inglés con equipos distribuidos, tickets y documentación.
+education:
+  - title: Ingeniería en Ciencias y Sistemas
+    institution: Universidad de San Carlos de Guatemala
+    period: 2018 – 2027
+    note: En curso, 9.º semestre. Cierre previsto en junio de 2027.
+  - title: Introducción a la Automatización de Pruebas de Software
+    institution: BDG Academy
+    period: nov. – dic. 2022
+    note: Curso virtual, aprobado.
+contact:
+  - kind: email
+    label: vasquezr.w98@gmail.com
+    url: mailto:vasquezr.w98@gmail.com
+  - kind: github
+    label: github.com/VasquezRW
+    url: https://github.com/VasquezRW
+  - kind: linkedin
+    label: linkedin.com/in/wilmer-v-r
+    url: https://www.linkedin.com/in/wilmer-v-r

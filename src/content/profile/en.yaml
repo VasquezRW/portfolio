@@ -1,0 +1,86 @@
+name: Wilmer Vasquez
+title: QA Automation Engineer
+headline: QA automation engineer for web, mobile and API testing
+bio: >-
+  I have spent 3.5 years testing web apps, Android and iOS apps and APIs, both manually and with
+  automation. I build test frameworks from scratch, plug them into CI/CD and help teams find
+  defects before they reach users.
+location: Guatemala City, Guatemala
+availability: Available now, remote or on-site
+facts:
+  - value: 3.5 years
+    label: Manual and automated QA
+  - value: Web, Android, iOS, API
+    label: Platforms I test
+  - value: English C1
+    label: Spanish native
+skills:
+  - category: Test automation
+    items:
+      - name: Java
+      - name: TypeScript
+      - name: Appium
+      - name: Selenium
+      - name: Cypress
+      - name: WebdriverIO
+      - name: Serenity BDD
+      - name: Cucumber and Gherkin
+      - name: JUnit
+      - name: Playwright
+        selfTaught: true
+      - name: AI-assisted test writing (Claude Code, Gemini)
+  - category: Testing practice
+    items:
+      - name: Functional and regression testing
+      - name: Integration and end-to-end testing
+      - name: Performance testing (JMeter)
+      - name: Test plans and coverage matrices
+      - name: Equivalence partitioning, boundary values, decision tables
+      - name: Log analysis (Mezmo, DevTools)
+  - category: API and data
+    items:
+      - name: Postman
+      - name: Rest Assured
+      - name: Karate DSL
+      - name: Swagger
+      - name: SQL (MySQL, PostgreSQL, SQL Server)
+      - name: MongoDB (basic)
+      - name: GraphQL
+        selfTaught: true
+  - category: CI/CD and tools
+    items:
+      - name: Git, GitHub, GitLab
+      - name: GitHub Actions
+      - name: GitLab CI/CD
+      - name: Jenkins
+      - name: Jira, ClickUp, Confluence
+      - name: TestRail
+        selfTaught: true
+      - name: Scrum and Kanban
+      - name: Azure, AWS, GCP
+languages:
+  - name: Spanish
+    level: native
+    description: Native language.
+  - name: English
+    level: C1
+    description: Advanced. I work in English with distributed teams, tickets and documentation.
+education:
+  - title: Systems Engineering (Ingeniería en Ciencias y Sistemas)
+    institution: Universidad de San Carlos de Guatemala
+    period: 2018 – 2027
+    note: In progress, 9th semester. Expected to finish in June 2027.
+  - title: Introduction to Software Test Automation
+    institution: BDG Academy
+    period: Nov – Dec 2022
+    note: Online course, completed.
+contact:
+  - kind: email
+    label: vasquezr.w98@gmail.com
+    url: mailto:vasquezr.w98@gmail.com
+  - kind: github
+    label: github.com/VasquezRW
+    url: https://github.com/VasquezRW
+  - kind: linkedin
+    label: linkedin.com/in/wilmer-v-r
+    url: https://www.linkedin.com/in/wilmer-v-r

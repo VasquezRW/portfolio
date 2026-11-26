@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import TagList from './TagList.astro';
+import { slugOf } from '../../lib/content';
+import { localizePath, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  lang: Lang;
+}
+
+const { project, lang } = Astro.props;
+const t = useTranslations(lang);
+const p = project.data;
+const href = localizePath(`/projects/${slugOf(project.id)}/`, lang);
+---
+
+<article
+  class="flex flex-col overflow-hidden rounded-lg border border-line bg-bg"
+  data-testid="project-card"
+>
+  <a href={href} tabindex="-1" aria-hidden="true" class="block border-b border-line">
+    <Image
+      src={p.cover}
+      alt=""
+      widths={[400, 800]}
+      sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
+      class="aspect-[16/10] w-full object-cover object-left-top"
+    />
+  </a>
+  <div class="flex flex-1 flex-col gap-2 px-5 pt-4.5 pb-5">
+    {
+      p.status !== 'completed' && (
+        <span class="text-small font-semibold text-ochre">{t(`projects.status.${p.status}`)}</span>
+      )
+    }
+    <h3 class="text-subhead font-bold">
+      <a href={href} class="text-ink no-underline hover:underline">{p.title}</a>
+    </h3>
+    <p class="text-[0.9375rem] text-muted">{p.summary}</p>
+    <TagList tags={p.tags} class="mt-1" />
+    <div class="mt-auto flex gap-4 pt-2 text-[0.9375rem] font-semibold">
+      <a href={href}>{t('projects.details')}</a>
+      {p.repo && <a href={p.repo}>{t('projects.code')}</a>}
+      {p.demo && <a href={p.demo}>{t('projects.demo')}</a>}
+    </div>
+  </div>
+</article>

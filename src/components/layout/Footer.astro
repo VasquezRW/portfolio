@@ -1,0 +1,18 @@
+---
+import { useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+---
+
+<footer class="gutter band text-sm text-muted">
+  <div class="mx-auto flex max-w-page flex-wrap justify-between gap-4">
+    <p>© {year} Wilmer Vasquez. {t('footer.built')}</p>
+    <a href="https://github.com/VasquezRW/portfolio">{t('footer.source')}</a>
+  </div>
+</footer>
