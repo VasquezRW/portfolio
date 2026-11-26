@@ -16,7 +16,7 @@ permissions:
 jobs:
   ci:
     name: ci
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04 # matches the Playwright noble image; keep in step with @playwright/test support
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
@@ -65,7 +65,7 @@ jobs:
     name: deploy
     needs: ci
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04 # matches the Playwright noble image; keep in step with @playwright/test support
     permissions:
       pages: write
       id-token: write

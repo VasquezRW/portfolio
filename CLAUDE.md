@@ -25,7 +25,7 @@ docker compose run --rm e2e pnpm exec playwright test tests/e2e/<file>.spec.ts -
 docker compose up --build site                      # prod build via nginx, http://localhost:8080
 ```
 
-`@playwright/test` is pinned exactly in `package.json`; `PLAYWRIGHT_VERSION` in `Dockerfile` must match it. CI (`.github/workflows/ci.yml`) runs the same pnpm scripts natively, not in Docker.
+`@playwright/test` is pinned exactly in `package.json`; `PLAYWRIGHT_VERSION` in `Dockerfile` must match it. CI (`.github/workflows/ci.yml`) runs the same pnpm scripts natively, not in Docker, on `ubuntu-24.04` (pinned: `ubuntu-latest` can move to an OS the pinned Playwright does not support).
 
 ## Architecture essentials
 
